@@ -6,7 +6,7 @@ This image contains the [NodeChef-CLI](https://www.nodechef.com/docs/parse-serve
 
 ## Gitlab-CI
 
-I initially built this image in order to use it in my Gitlab-CI pipeline.
+I initially built this image in order to use it in my Gitlab-CI pipeline:
 
 ```yaml
 nodechef:dev:
