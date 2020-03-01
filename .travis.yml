@@ -28,14 +28,13 @@ script:
 
     for NODE_VERSION in "${NODE_VERSIONS}"; do
       NODECHEF_CLI_VERSION="$(docker run --rm -e SKIP_UPDATE_CHECK="1" --entrypoint /usr/bin/env -t node:12 /bin/bash -c 'npm install --silent -g nodechef-cli &>/dev/null && npm list -g nodechef-cli | egrep "\@[0-9]+\.[0-9]+\.[0-9]+.*" | cut -d "@" -f 2 | head -n1' | awk '{print $1}')"
-      TAGS=("latest")
-      TAGS+=("latest-node${NODE_VERSION}")
+      TAGS=("latest-node${NODE_VERSION}")
       TAGS+=("${NODECHEF_CLI_VERSION}")
       TAGS+=("${NODECHEF_CLI_VERSION}-node${NODE_VERSION}")
-      docker build -t "${IMAGE_NAME}:latest" --build-arg NODE_VERSION="${NODE_VERSION}" --build-arg NODECHEF_CLI_VERSION="${NODECHEF_CLI_VERSION}" .
+      docker build -t "${IMAGE_NAME}:latest" --build-arg NODE_VERSION="${NODE_VERSION}" --build-arg NODECHEF_CLI_VERSION="@${NODECHEF_CLI_VERSION}" .
 
       for TAG in "${TAGS[@]}" ; do
-        [[ "${TAG}" != "latest" ]] && docker tag "${IMAGE_NAME}:latest" "${IMAGE_NAME}:${TAG}"
+        docker tag "${IMAGE_NAME}:latest" "${IMAGE_NAME}:${TAG}"
       done
 
       if [[ "${TRAVIS_BRANCH}" == "master" ]] && [[ "${TRAVIS_PULL_REQUEST}" == "false" ]]; then
