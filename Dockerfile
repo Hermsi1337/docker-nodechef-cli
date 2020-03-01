@@ -9,5 +9,3 @@ ENV         NODECHEF_CLI_VERSION="${NODECHEF_CLI_VERSION}" \
 
 RUN         set -x && \
             npm install -g nodechef-cli"${NODECHEF_CLI_VERSION}"
-
-ENTRYPOINT  ["nc"]
