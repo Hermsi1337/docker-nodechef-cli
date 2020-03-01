@@ -38,7 +38,7 @@ script:
       TAGS+=("${NODECHEF_CLI_MAJOR_RELEASE_VERSION}")
       TAGS+=("${NODECHEF_CLI_MAJOR_RELEASE_VERSION}-node${NODE_VERSION}")
 
-      docker build -t "${IMAGE_NAME}:latest" --build-arg NODE_VERSION="${NODE_VERSION}" --build-arg NODECHEF_CLI_VERSION="@${NODECHEF_CLI_VERSION}" .
+      docker build -t "${IMAGE_NAME}:latest" --build-arg NODE_VERSION="${NODE_VERSION}" --build-arg NODECHEF_CLI_VERSION="@${NODECHEF_CLI_PATCH_RELEASE_VERSION}" .
 
       for TAG in "${TAGS[@]}" ; do
         docker tag "${IMAGE_NAME}:latest" "${IMAGE_NAME}:${TAG}"
