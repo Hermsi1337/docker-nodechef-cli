@@ -6,7 +6,6 @@ addons:
   apt:
     packages:
       - docker-ce
-      - w3m
       - grep
 
 env:
@@ -26,11 +25,19 @@ script:
 
     NODE_VERSIONS=("12" "13")
 
-    for NODE_VERSION in "${NODE_VERSIONS}"; do
-      NODECHEF_CLI_VERSION="$(docker run --rm -e SKIP_UPDATE_CHECK="1" --entrypoint /usr/bin/env -t node:12 /bin/bash -c 'npm install --silent -g nodechef-cli &>/dev/null && npm list -g nodechef-cli | egrep "\@[0-9]+\.[0-9]+\.[0-9]+.*" | cut -d "@" -f 2 | head -n1' | awk '{print $1}')"
+    for NODE_VERSION in "${NODE_VERSIONS[@]}"; do
+      NODECHEF_CLI_PATCH_RELEASE_VERSION="$(docker run --rm -e SKIP_UPDATE_CHECK="1" --entrypoint /usr/bin/env -t node:12 /bin/bash -c 'npm install --silent -g nodechef-cli &>/dev/null && npm list -g nodechef-cli | egrep "\@[0-9]+\.[0-9]+\.[0-9]+.*" | cut -d "@" -f 2 | head -n1' | awk '{print $1}')"
+      NODECHEF_CLI_MINOR_RELEASE_VERSION="${NODECHEF_CLI_PATCH_RELEASE_VERSION%.*}"
+      NODECHEF_CLI_MAJOR_RELEASE_VERSION="${NODECHEF_CLI_MINOR_RELEASE_VERSION%.*}"
+
       TAGS=("latest-node${NODE_VERSION}")
-      TAGS+=("${NODECHEF_CLI_VERSION}")
-      TAGS+=("${NODECHEF_CLI_VERSION}-node${NODE_VERSION}")
+      TAGS+=("${NODECHEF_CLI_PATCH_RELEASE_VERSION}")
+      TAGS+=("${NODECHEF_CLI_PATCH_RELEASE_VERSION}-node${NODE_VERSION}")
+      TAGS+=("${NODECHEF_CLI_MINOR_RELEASE_VERSION}")
+      TAGS+=("${NODECHEF_CLI_MINOR_RELEASE_VERSION}-node${NODE_VERSION}")
+      TAGS+=("${NODECHEF_CLI_MAJOR_RELEASE_VERSION}")
+      TAGS+=("${NODECHEF_CLI_MAJOR_RELEASE_VERSION}-node${NODE_VERSION}")
+
       docker build -t "${IMAGE_NAME}:latest" --build-arg NODE_VERSION="${NODE_VERSION}" --build-arg NODECHEF_CLI_VERSION="@${NODECHEF_CLI_VERSION}" .
 
       for TAG in "${TAGS[@]}" ; do
