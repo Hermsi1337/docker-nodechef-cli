@@ -26,7 +26,7 @@ script:
     NODE_VERSIONS=("12" "13")
 
     for NODE_VERSION in "${NODE_VERSIONS[@]}"; do
-      NODECHEF_CLI_PATCH_RELEASE_VERSION="$(docker run --rm -e SKIP_UPDATE_CHECK="1" --entrypoint /usr/bin/env -t node:12 /bin/bash -c 'npm install --silent -g nodechef-cli &>/dev/null && npm list -g nodechef-cli | egrep "\@[0-9]+\.[0-9]+\.[0-9]+.*" | cut -d "@" -f 2 | head -n1' | awk '{print $1}')"
+      NODECHEF_CLI_PATCH_RELEASE_VERSION="$(docker run --rm -e SKIP_UPDATE_CHECK="1" --entrypoint /usr/bin/env -t node:${NODE_VERSION} /bin/bash -c 'npm install --silent -g nodechef-cli &>/dev/null && npm list -g nodechef-cli | egrep "\@[0-9]+\.[0-9]+\.[0-9]+.*" | cut -d "@" -f 2 | head -n1' | awk '{print $1}')"
       NODECHEF_CLI_MINOR_RELEASE_VERSION="${NODECHEF_CLI_PATCH_RELEASE_VERSION%.*}"
       NODECHEF_CLI_MAJOR_RELEASE_VERSION="${NODECHEF_CLI_MINOR_RELEASE_VERSION%.*}"
 
