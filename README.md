@@ -1,6 +1,6 @@
 # NodeChef-CLI dockerized
 
-This image contains the (NodeChef-CLI)[https://www.nodechef.com/docs/parse-server/global/cli] for deploying applications to (NodeChef)[https://www.nodechef.com/].
+This image contains the [NodeChef-CLI](https://www.nodechef.com/docs/parse-server/global/cli) for deploying applications to [NodeChef](https://www.nodechef.com/).
 
 # Usage
 
