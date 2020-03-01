@@ -1,4 +1,4 @@
-ARG         NODE_VERSION="12"
+ARG         NODE_VERSION="13"
 FROM        node:${NODE_VERSION}
 
 LABEL       maintainer="https://github.com/hermsi1337"
