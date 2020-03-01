@@ -30,5 +30,5 @@ nodechef:dev:
 But it's also possible to use this image locally, if you don't want to install `node` and the `nodechef-cli` itself:
 
 ```shell
-$ docker run --rm -v $(pwd):/app -w /app hermsi/nodechef-cli deploy -i yourEnv -auth yourDeployToken --updateafterping
+$ docker run --rm -v $(pwd):/app -w /app --entrypoint nc hermsi/nodechef-cli deploy -i yourEnv -auth yourDeployToken --updateafterping
 ```
