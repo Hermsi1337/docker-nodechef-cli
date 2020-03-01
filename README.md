@@ -11,7 +11,7 @@ I initially built this image in order to use it in my Gitlab-CI pipeline:
 ```yaml
 nodechef:dev:
   stage: publish
-  image: hermsi:nodechef-cli
+  image: hermsi/nodechef-cli
   environment:
     name: development
   script: >
